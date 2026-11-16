@@ -1,50 +1,45 @@
-# Heart Disease Analysis — Group A
+# Heart Disease ML
 
-An educational data science project exploring the Cleveland subset of the UCI Heart Disease dataset. The notebook examines clinical features, performs exploratory analysis and feature selection, and compares five classifiers for binary disease presence.
+**A data science study of heart disease classification using the UCI Cleveland dataset.** Explore the data, compare baseline and machine learning models, and follow a reproducible evaluation from training folds to a held-out test set.
 
-**Research only.** This project is not clinically validated and must not be used to diagnose patients or make treatment decisions. The notebook's original clinical deployment recommendations are historical conclusions, not evidence of clinical readiness.
+[Open the notebook](heart_disease_analysis.ipynb) · [Dataset and attribution](#dataset) · [Methodology](#methodology)
 
-## Project contents
+> **Educational research only.** This project has not been clinically validated and must not be used for diagnosis, treatment, or clinical decisions.
 
-- `heartDisease_GroupA.ipynb` — original analysis, with saved outputs and decorative embedded images removed for a clean repository; a limitations notice has been added.
-- `heart_disease.csv` — dataset supplied with the project.
-- `testcases.py` — original notebook helper checks. These checks inspect pipeline structure and do not establish that the complete analysis avoids leakage.
-- `requirements.txt` — direct dependencies needed to open and run the notebook.
+## What is inside?
 
-## Getting started
+The notebook takes you through the dataset, exploratory visualizations, leakage-aware preprocessing, model comparison, and an evaluation of the selected model. It compares a majority-class baseline, logistic regression, and a random forest using accuracy, precision, recall, F1 and ROC-AUC. Results are generated when the notebook runs rather than asserted in advance.
 
-Use Python 3.10 or later and run these commands from the repository root:
+## Run the notebook
 
-```sh
+Use Python 3.10 or later, from the repository root:
+
+```bash
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 python -m pip install -r requirements.txt
-jupyter notebook heartDisease_GroupA.ipynb
+jupyter notebook heart_disease_analysis.ipynb
 ```
 
-Run cells in order. Dependencies are not pinned because the original environment was not supplied; compatibility and exact reproduction of historical results are not guaranteed. The notebook uses relative paths and should be launched from the repository root.
+Run all cells in order. The CSV path is relative to the repository root. Package versions are bounded rather than fully locked, so results and compatibility can vary across environments.
 
-## Approach and limitations
+## Methodology
 
-The notebook explores the dataset, imputes missing values, uses correlation, mutual information and chi-square scores for feature selection, and compares logistic regression, random forest, gradient boosting, XGBoost and LightGBM. It reports classification metrics and ROC-AUC.
+1. Convert the original diagnosis to binary presence or absence and reserve a stratified 20% test set.
+2. Explore training data only. Fit missing-value imputation, numeric scaling and categorical one-hot encoding inside each cross-validation fold.
+3. Compare models using five-fold stratified cross-validation on training data and select by mean ROC-AUC.
+4. Fit the selected model on all training data and report held-out classification metrics, a confusion matrix and ROC curve.
 
-- Imputation and feature selection occur before the train/test split. This exposes evaluation data to preprocessing and selection and can bias estimates. Cross-validation also operates on data imputed before its folds.
-- Models are compared and selected using the test set, so its results are not an independent final assessment. A separate validation strategy and untouched test set are needed.
-- The dataset is small and historical, from a restricted population. Generalization, calibration and clinical utility are unverified.
-- Some notebook narrative makes clinical claims or recommendations beyond what this analysis can support; treat them as original commentary, not established findings.
-- Results and conclusions have not been independently reproduced in this repository.
+The dataset is small and historical, so estimates from one split are uncertain. External validation, calibration, subgroup evaluation and clinical assessment are needed before any real-world application. The supplied CSV's precise preparation and intermediary source are unknown.
 
-## Data attribution
+## Dataset
 
-The supplied CSV is described by the original notebook as the Cleveland subset of the [UCI Heart Disease dataset](https://archive.ics.uci.edu/dataset/45/heart+disease). Its exact preparation and intermediary source were not documented in the archive. UCI credits Andras Janosi, William Steinbrunn, Matthias Pfisterer and Robert Detrano for the dataset, DOI [10.24432/C52P4X](https://doi.org/10.24432/C52P4X), and lists it under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The supplied CSV has a header and represents missing entries as empty fields; other transformations are unknown.
+The original submission describes `heart_disease.csv` as the Cleveland subset of the [UCI Heart Disease dataset](https://archive.ics.uci.edu/dataset/45/heart+disease). The provided CSV includes a header and empty fields for missing values; other transformations are unknown.
+
+Janosi, A., Steinbrunn, W., Pfisterer, M., & Detrano, R. (1989). *Heart Disease* [Dataset]. UCI Machine Learning Repository. [doi:10.24432/C52P4X](https://doi.org/10.24432/C52P4X). UCI lists the dataset under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 ## Contributors
 
-Group A, as credited in the original notebook:
+Originally created by Group A: **Anas Ben Zitun, Marwan Elamami, Sanad Ben Latif, and Abdul Majed Mraied**. The notebook was subsequently rebuilt for clarity and a more reliable evaluation workflow; it does not reproduce the original model comparisons.
 
-- Anas Ben Zitun
-- Marwan Elamami
-- Sanad Ben Latif
-- Abdul Majed Mraied
-
-No software license was included in the supplied archive. All rights to the project code and notebook remain with their respective rights holders unless a license is added by them. Dataset terms are separate.
+No software license was supplied with the project. Code and notebook rights remain with their respective rights holders unless they choose a license. The dataset has separate terms.

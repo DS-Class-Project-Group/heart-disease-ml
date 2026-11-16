@@ -1,10 +1,6 @@
-jupyter
-numpy
-pandas
-matplotlib
-seaborn
-missingno
-plotly
-scikit-learn
-xgboost
-lightgbm
+jupyter>=1.0,<2
+numpy>=1.24,<3
+pandas>=2,<4
+matplotlib>=3.7,<4
+seaborn>=0.13,<1
+scikit-learn>=1.3,<2
